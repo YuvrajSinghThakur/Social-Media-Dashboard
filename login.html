@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Social Media Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <span class="material-icons-outlined login-icon">lock</span>
+      <div class="login-title">Sign In</div>
+      <div class="login-desc">Login with your Gmail address. We'll send you a one-time OTP to verify.</div>
+      <form id="login-form">
+        <input type="email" id="email" placeholder="Enter your Gmail" autocomplete="username" required>
+        <button type="button" class="login-btn" id="send-otp-btn">Send OTP</button>
+      </form>
+      <form id="otp-form" style="display: none;">
+        <input type="text" id="otp" maxlength="6" placeholder="Enter OTP" required>
+        <button type="button" class="login-btn" id="verify-otp-btn">Verify & Login</button>
+      </form>
+      <div id="login-message"></div>
+    </div>
+  </div>
+  <script src="login.js"></script>
+</body>
+</html>

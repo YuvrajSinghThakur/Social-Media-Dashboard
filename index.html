@@ -1,163 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media Reminder</title>
-
-    <!-- Open Sans Font  -->
-
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet">
-
-    <!-- Linking the Css File -->
-
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Material Icons -->
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <meta charset="UTF-8">
+  <title>Social Media Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Session JWT protection: redirect to login if missing/invalid
+    const token = localStorage.getItem("dashboard_jwt");
+    if (!token) window.location.href = "login.html";
+    else {
+      fetch("http://localhost:5000/api/check-auth", {
+        headers: { "Authorization": "Bearer " + token }
+      }).then(res => {
+        if (!res.ok) window.location.href = "login.html";
+      }).catch(() => window.location.href = "login.html");
+    }
+  </script>
 </head>
-
 <body>
-    <div class="grid-container">
+  <div class="grid-container">
+    <!-- Sidebar -->
+    <nav id="sideBar" class="sidebar">
+      <div class="sidebar-title">
+        <span class="sidebar-brand">
+          <span class="material-icons-outlined">dashboard</span> Dashboard
+        </span>
+        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+      </div>
+      <ul class="sidebar-list">
+        <li class="sidebar-list-item"><a href="#" onclick="showSection('overview')">Overview</a></li>
+        <li class="sidebar-list-item"><a href="#" onclick="showSection('twitter')">Twitter</a></li>
+        <li class="sidebar-list-item"><a href="#" onclick="showSection('instagram')">Instagram</a></li>
+        <li class="sidebar-list-item"><a href="#" onclick="showSection('facebook')">Facebook</a></li>
+      </ul>
+    </nav>
 
-        <!-- Header -->
-        <header class="header">
-            <div class="menu-icon" onclick="openSidebar()">
-                <span class="material-icons-outlined">menu</span>
-            </div>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <span class="material-icons-outlined menu-icon" onclick="openSidebar()">menu</span>
+        <h1>Social Media Dashboard</h1>
+      </div>
+      <div class="header-right">
+        <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">🌙</button>
+        <button id="logoutBtn" class="logout-btn" aria-label="Logout">Logout</button>
+      </div>
+    </header>
 
-            <div class="header-left">
-                <span class="material-icons-outlined"> search</span>
-            </div>
-
-            <div class="header-right">
-                <span class="material-icons-outlined"> notifications</span>
-                <span class="material-icons-outlined"> email</span>
-                <span class="material-icons-outlined"> account_circle</span>
-
-            </div>
-        </header>
-
-        <!-- End of the header -->
-
-        <!-- SideBar -->
-        <aside id="sideBar">
-            <div class="sidebar-title">
-                <div class="sidebar-brand">
-                    <span class="material-icons-outlined">mood</span>LOGO
-
-                </div>
-                <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-
-            </div>
-            <ul class="sidebar-list">
-                <li class="sidebar-list-item">
-                    <a href="#">
-                        <span class="material-icons-outlined">dashboard</span>Dashboard
-
-                    </a>
-                </li>
-
-                <li class="sidebar-list-item">
-                    <a href="#">
-                        <span class="material-icons-outlined">leaderboard</span>Leaderboard
-
-                    </a>
-                </li>
-
-                <li class="sidebar-list-item">
-                    <a href="#">
-                        <span class="material-icons-outlined">forum</span>Forum
-
-                    </a>
-                </li>
-
-                <li class="sidebar-list-item">
-                    <a href="#">
-                        <span class="material-icons-outlined">phone</span>Support
-
-                    </a>
-                </li>
-
-                <li class="sidebar-list-item">
-                    <a href="#">
-                        <span class="material-icons-outlined">email</span>Messages
-
-                    </a>
-                </li>
-
-                <li class="sidebar-list-item">
-                    <a href="#">
-                        <span class="material-icons-outlined">settings</span>Settings
-
-                    </a>
-                </li>
-
-        
-            </ul>
-        </aside>
-
-        <!-- End of the SideBar -->
-        <!-- Main -->
-        <main class="main-container">
-            <div class="main-title">
-                <h2>DASHBOARD</h2>
-            </div>
-
-            <div class="main-cards">
-                <div class="cards">
-                    <div class="card-inner">
-                        <h2>LIKES</h2>
-                        <span class="material-icons-outlined">thumb_up</span>Messages
-
-                    </div>
-                    <h1>4,021</h1>
-                </div>
-
-                <div class="cards">
-                    <div class="card-inner">
-                        <h2>SUBSRIBERS</h2>
-                        <span class="material-icons-outlined">subscriptions</span>Messages
-
-                    </div>
-                    <h1>8,731</h1>
-                </div>
-
-                <div class="cards">
-                    <div class="card-inner">
-                        <h2>FOLLOWERS</h2>
-                        <span class="material-icons-outlined">groups</span>Messages
-
-                    </div>
-                    <h1>4,021</h1>
-                </div>
-
-                <div class="cards">
-                    <div class="card-inner">
-                        <h2>MESSAGES</h2>
-                        <span class="material-icons-outlined">forum</span>Messages
-
-                    </div>
-                    <h1>1,962</h1>
-                </div>
-
-              
-            </div>
-        </main>
-
-        <!-- End of the main container -->
-
-    </div>
-
-    <!-- Linking the JavaScript File -->
-    <script src="script.js"></script>
+    <!-- Main Content -->
+    <main class="main-container">
+      <div class="main-title">
+        <h2 id="section-title">All Platforms Overview</h2>
+      </div>
+      <div class="main-cards">
+        <button class="cards" id="posts-card" onclick="refreshData('posts')" aria-label="Refresh posts">
+          <div class="card-inner">
+            <h2>Posts</h2>
+            <span class="material-icons-outlined">article</span>
+          </div>
+          <h1 id="posts-count">0</h1>
+        </button>
+        <button class="cards" id="followers-card" onclick="refreshData('followers')" aria-label="Refresh followers">
+          <div class="card-inner">
+            <h2>Followers</h2>
+            <span class="material-icons-outlined">people_outline</span>
+          </div>
+          <h1 id="followers-count">0</h1>
+        </button>
+        <button class="cards" id="user-card" onclick="refreshData('user')" aria-label="Refresh user">
+          <div class="card-inner">
+            <h2>User</h2>
+            <span class="material-icons-outlined">person</span>
+          </div>
+          <h1 id="username">-</h1>
+        </button>
+        <button class="cards" id="comments-card" onclick="refreshData('comments')" aria-label="Refresh comments">
+          <div class="card-inner">
+            <h2>Comments</h2>
+            <span class="material-icons-outlined">comment</span>
+          </div>
+          <h1 id="comments-count">0</h1>
+        </button>
+      </div>
+      <div id="platform-specific-content"></div>
+    </main>
+  </div>
+  <script src="script.js"></script>
 </body>
-
 </html>
